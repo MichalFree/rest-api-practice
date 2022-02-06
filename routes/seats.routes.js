@@ -19,8 +19,12 @@ router.route('/seats').post((req, res) => {
     client: req.body.client,
     email: req.body.email,
   };
-  db.seats.push(newData);
-  return res.json({message: 'ok'});
+  if(db.seats.some(checkSeat => (checkSeat.day == req.body.day && checkSeat.seat == req.body.seat))) {
+    return res.status(404).json({ message: "The slot is already taken..." });
+  } else {
+    db.seats.push(newData);
+    return res.json({message: 'Reserved complete'});
+  }
 });
 
 router.route('/seats/:id').delete((req, res) => {
