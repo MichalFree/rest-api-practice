@@ -9,10 +9,11 @@
     "express": "^4.17.2",
     "express-router": "^0.0.1",
     "nodemon": "^2.0.15",
+    "socket.io": "^4.4.1",
     "uuid": "^8.3.2"
   },
   "scripts": {
-    "start": "npx nodemon server.js",
+    "start": "nodemon server.js",
     "build": "cd client && yarn install && yarn build"
   }
 }
