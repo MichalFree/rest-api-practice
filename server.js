@@ -1,9 +1,9 @@
 const express = require('express');
 const cors = require('cors');
 const app = express();
+const socket = require('socket.io');
 const path = require('path');
 const mongoose = require('mongoose');
-
 
 const testimonialsRoutes = require('./routes/testimonials.routes');
 const concertsRoutes = require('./routes/concerts.routes');
@@ -14,7 +14,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use;
-
 
 app.use('/api', testimonialsRoutes);
 app.use('/api', concertsRoutes);
@@ -30,10 +29,13 @@ app.use((req, res) => {
 });
 
 // server
-mongoose.connect('mongodb://localhost:27017/NewWaveDB', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect(
+  'mongodb+srv://Michalfree:<password>@cluster0.lgxqa.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  }
+);
 const db = mongoose.connection;
 
 db.once('open', () => {
@@ -41,6 +43,13 @@ db.once('open', () => {
 });
 db.on('error', (err) => console.log('Error' + err));
 
-app.listen(process.env.PORT || 8000, () => {
-  console.log('Server is running');
+const server = app.listen(process.env.PORT || 8000, () => {
+  console.log('Server is running on port: 8000')
 });
+
+const io = socket(server);
+io.on('connection', (socket) => {
+  console.log('New socket ', socket.id);
+});
+
+module.exports = server;
