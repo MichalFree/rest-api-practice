@@ -19,11 +19,12 @@ router.route('/seats').post((req, res) => {
     client: req.body.client,
     email: req.body.email,
   };
-  if(db.seats.some(checkSeat => (checkSeat.day == req.body.day && checkSeat.seat == req.body.seat))) {
+  if (db.seats.some(checkSeat => (checkSeat.day == req.body.day && checkSeat.seat == req.body.seat))) {
     return res.status(404).json({ message: "The slot is already taken..." });
   } else {
     db.seats.push(newData);
-    return res.json({message: 'Reserved complete'});
+    req.io.emit('seatsUpdated', db.seats);
+    return res.json({ message: 'Reserved complete' });
   }
 });
 
@@ -31,7 +32,7 @@ router.route('/seats/:id').delete((req, res) => {
   const deletedSeats = db.seats.filter((item) => item.id == req.params.id);
   const indexOfSeats = db.seats.indexOf(deletedSeats);
   db.concerts.splice(indexOfSeats, 1);
-  return res.json({message: 'ok'});
+  return res.json({ message: 'ok' });
 });
 
 router.route('/seats/:id').put((req, res) => {
@@ -45,7 +46,7 @@ router.route('/seats/:id').put((req, res) => {
     email: req.body.email,
   };
   db.concerts[indexOfConcerts] = newConcert;
-  return res.json({message: 'ok'});
+  return res.json({ message: 'ok' });
 });
 
 module.exports = router;
