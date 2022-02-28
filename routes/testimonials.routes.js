@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getAll, getItem, getRandom, postItem, putItem, deleteItem } = require('../controllers/testimonial.controller');
+const { getAll, getItem, getRandom, postItem, putItem, deleteItem } = require('../controllers/testimonials.controller');
 
 
 router.get('/testimonials', getAll);

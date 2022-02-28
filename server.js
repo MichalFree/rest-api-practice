@@ -9,14 +9,15 @@ const testimonialsRoutes = require('./routes/testimonials.routes');
 const concertsRoutes = require('./routes/concerts.routes');
 const seatsRoutes = require('./routes/seats.routes');
 
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-
 app.use((req, res, next) => {
   req.io = io;
   next();
 });
+
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
 
 app.use('/api', testimonialsRoutes);
 app.use('/api', concertsRoutes);
@@ -33,7 +34,7 @@ app.use((req, res) => {
 
 // server
 mongoose.connect(
-  'mongodb+srv://Michalfree:<password>@cluster0.lgxqa.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
+  'mongodb+srv://adrian:62eSlNsoyR3hG63f@cluster0.6l8kf.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
