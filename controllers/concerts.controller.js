@@ -72,13 +72,13 @@ exports.deleteItem = async (req, res) => {
     }
 };
 
-exports.getPerformer = async (req, res) => {
+exports.performer = async (req, res) => {
     try {
-        const performer = req.params.performer;
-        const getPerformer = await Concert.find({ performer: performer });
-        if (!getPerformer) res.status(404).json({ message: 'Not found' });
+        const performerId = req.params.performer;
+        const performer = await Concert.find({ performer: performerId });
+        if (!performer) res.status(404).json({ message: 'Not found' });
         else {
-            res.json(getPerformer);
+            res.json(performer);
         }
     } catch (err) {
         res.status(500).json({ message: err });
@@ -114,13 +114,13 @@ exports.getPrice = async (req, res) => {
     }
 };
 
-exports.getbyDay = async (req, res) => {
+exports.day = async (req, res) => {
     try {
-        const day = req.params.day;
-        const getDay = await Concert.find({ day: day });
-        if (!getDay) res.status(404).json({ message: 'Not found' });
+        const dayId = req.params.day;
+        const day = await Concert.find({ day: dayId });
+        if (!day) res.status(404).json({ message: 'Not found' });
         else {
-            res.json(getDay);
+            res.json(day);
         }
     } catch (err) {
         res.status(500).json({ message: err });
